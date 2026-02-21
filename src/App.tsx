@@ -3,110 +3,170 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross } from 'lucide-react';
 
 export default function App() {
+  const targetUrl = 'https://jornadacrista-ultimachance.vercel.app/';
+
+  useEffect(() => {
+    // 1. Back-Redirect Logic (Aggressive for Mobile)
+    // We push states to trap the back button/gesture
+    const pushState = () => {
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    pushState();
+
+    const handlePopState = () => {
+      // Redirect to the target URL when back button/gesture is used
+      window.location.replace(targetUrl);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // 2. Exit Intent for Mobile (Visibility Change)
+    // On mobile, "leaving" often means switching tabs or minimizing the browser
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // Optional: Some aggressive scripts redirect even when hidden
+        // window.location.replace(targetUrl);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // 3. Desktop Exit Intent (Mouse Leave) - Keep for hybrid devices
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        window.location.replace(targetUrl);
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    // 4. Touch Start Detection (Optional: can be used to detect rapid scroll up)
+    let lastY = 0;
+    const handleTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0].clientY;
+      if (lastY > currentY + 50 && window.scrollY === 0) {
+        // User is swiping down at the top of the page (intent to see address bar)
+        // window.location.replace(targetUrl);
+      }
+      lastY = currentY;
+    };
+    document.addEventListener('touchmove', handleTouchMove);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+
   const handlePurchase = () => {
-    console.log('Redirecting to checkout with R$ 19,90 offer...');
+    window.location.href = targetUrl;
   };
 
   return (
-    <div className="min-h-screen bg-black font-sans text-white flex flex-col items-center overflow-x-hidden">
+    <div className="min-h-screen bg-black font-sans text-white flex flex-col items-center overflow-x-hidden selection:bg-emerald-500/30">
       {/* Background Image Overlay */}
-      <div className="fixed inset-0 z-0 opacity-30">
+      <div className="fixed inset-0 z-0 opacity-20">
         <img
-          src="https://picsum.photos/seed/faith/1920/1080?blur=8"
+          src="https://picsum.photos/seed/faith/1920/1080?blur=10"
           alt="Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-110"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10 w-full max-w-lg px-4 py-12 md:py-20 flex flex-col items-center">
+      <main className="relative z-10 w-full max-w-md px-5 py-10 md:py-20 flex flex-col items-center">
         
         {/* Top Icon */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 p-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="mb-6 p-5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md"
         >
-          <Cross className="w-8 h-8 text-emerald-500" />
+          <Cross className="w-10 h-10 text-emerald-500" />
         </motion.div>
 
         {/* Headline Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 w-full">
           <motion.span 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="inline-block px-4 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-6 border border-emerald-500/20"
+            className="inline-block px-5 py-1.5 bg-emerald-500/10 text-emerald-400 text-[11px] font-black uppercase tracking-[0.25em] rounded-full mb-6 border border-emerald-500/20"
           >
-            Oportunidade Final
+            Atenção: Oferta Única
           </motion.span>
           
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-6"
+            className="text-4xl md:text-5xl font-light tracking-tight leading-[1.1] mb-6"
           >
-            Sua caminhada <br />
-            <span className="font-serif italic text-emerald-500">não precisa parar.</span>
+            Sua jornada <br />
+            <span className="font-serif italic text-emerald-500">não termina aqui.</span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-stone-400 font-light leading-relaxed max-w-sm mx-auto"
+            className="text-base text-stone-400 font-light leading-relaxed max-w-[280px] mx-auto"
           >
-            Entendemos que o momento pode ser difícil. Por isso, liberamos um acesso especial para você hoje.
+            Preparamos uma condição exclusiva para você não desistir do seu crescimento espiritual hoje.
           </motion.p>
         </div>
 
         {/* Feature Image Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="w-full aspect-video rounded-3xl overflow-hidden mb-12 border border-white/10 relative group"
+          className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden mb-10 border border-white/10 relative shadow-2xl shadow-emerald-900/10"
         >
           <img
-            src="https://picsum.photos/seed/bible/800/450"
+            src="https://picsum.photos/seed/bible/800/600"
             alt="Jornada Cristã"
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+            className="w-full h-full object-cover grayscale brightness-75"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-          <div className="absolute bottom-4 left-6">
-            <p className="text-xs font-bold tracking-widest uppercase text-white/60">Jornada Cristã</p>
-            <p className="text-lg font-serif italic">Renove sua fé diariamente</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6">
+            <p className="text-[10px] font-black tracking-widest uppercase text-emerald-500 mb-1">Acesso Imediato</p>
+            <p className="text-xl font-serif italic text-white leading-tight">Tudo o que você precisa para uma rotina com Deus.</p>
           </div>
         </motion.div>
 
         {/* Offer Box */}
-        <div className="w-full bg-stone-900/50 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/5 shadow-2xl">
+        <div className="w-full bg-stone-900/40 backdrop-blur-xl rounded-[3rem] p-8 md:p-10 border border-white/5 shadow-2xl">
           
           {/* Benefits */}
-          <div className="space-y-4 mb-10">
+          <div className="space-y-5 mb-10">
             {[
-              "Acesso Vitalício (Sem Mensalidades)",
+              "Acesso Vitalício e Imediato",
               "Devocionais e Planos de Leitura",
-              "Comunidade Exclusiva de Fé",
-              "Suporte e Progresso Espiritual"
+              "Comunidade Exclusiva",
+              "Sistema de Progresso"
             ].map((text, i) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + (i * 0.1) }}
-                className="flex items-center gap-3"
+                className="flex items-center gap-4"
               >
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                <span className="text-stone-300 text-sm font-medium">{text}</span>
+                <div className="bg-emerald-500/20 p-1 rounded-full">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                </div>
+                <span className="text-stone-200 text-sm font-semibold tracking-wide">{text}</span>
               </motion.div>
             ))}
           </div>
@@ -116,12 +176,12 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-center mb-8"
+            className="text-center mb-10"
           >
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <span className="h-[1px] w-8 bg-white/10" />
-              <p className="text-stone-500 line-through text-sm">De R$ 27,90</p>
-              <span className="h-[1px] w-8 bg-white/10" />
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="h-[1px] w-6 bg-white/10" />
+              <p className="text-stone-500 line-through text-sm font-medium">De R$ 27,90</p>
+              <span className="h-[1px] w-6 bg-white/10" />
             </div>
             
             <div className="relative inline-block">
@@ -129,43 +189,49 @@ export default function App() {
                 R$ 19,90
               </p>
               <motion.div 
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute -top-4 -right-8 bg-emerald-500 text-black text-[10px] font-black px-2 py-1 rounded-md rotate-12"
+                animate={{ 
+                  scale: [1, 1.15, 1],
+                  rotate: [12, 15, 12]
+                }}
+                transition={{ repeat: Infinity, duration: 2.5 }}
+                className="absolute -top-5 -right-10 bg-emerald-500 text-black text-[10px] font-black px-3 py-1.5 rounded-lg"
               >
-                ÚNICO
+                OFERTA
               </motion.div>
             </div>
             
-            <p className="mt-4 text-emerald-400 text-[10px] font-bold tracking-widest uppercase">
-              Oferta válida apenas para esta tentativa
+            <p className="mt-6 text-emerald-400 text-[11px] font-black tracking-[0.15em] uppercase bg-emerald-500/5 py-2 rounded-xl">
+              Pagamento Único • Sem Mensalidades
             </p>
           </motion.div>
 
           {/* CTA */}
           <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: '#10b981' }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handlePurchase}
-            className="w-full bg-emerald-600 text-white font-bold text-lg py-5 rounded-2xl shadow-xl shadow-emerald-900/20 transition-all flex items-center justify-center gap-3 group"
+            className="w-full bg-emerald-600 text-white font-black text-lg py-6 rounded-[2rem] shadow-2xl shadow-emerald-900/40 transition-all flex flex-col items-center justify-center gap-1 group"
           >
-            SIM, QUERO GARANTIR AGORA
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span className="flex items-center gap-2">
+              QUERO MEU ACESSO AGORA
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </span>
+            <span className="text-[10px] opacity-70 font-bold uppercase tracking-widest">Clique para garantir o desconto</span>
           </motion.button>
 
           {/* Guarantee */}
-          <div className="mt-6 flex flex-col items-center gap-2">
+          <div className="mt-8 flex flex-col items-center gap-3">
             <div className="flex items-center gap-2 text-stone-500">
-              <ShieldCheck className="w-4 h-4" />
-              <p className="text-[10px] font-bold tracking-widest uppercase">Segurança Total & 7 Dias de Garantia</p>
+              <ShieldCheck className="w-5 h-5 text-emerald-500/50" />
+              <p className="text-[10px] font-black tracking-[0.2em] uppercase">Garantia de 7 Dias</p>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-16 text-center space-y-4">
-          <p className="text-stone-600 text-[10px] font-medium tracking-widest uppercase">
-            Jornada Cristã © 2026 • Todos os direitos reservados
+        <footer className="mt-16 text-center pb-10">
+          <p className="text-stone-600 text-[10px] font-bold tracking-[0.3em] uppercase">
+            Jornada Cristã • 2026
           </p>
         </footer>
       </main>
