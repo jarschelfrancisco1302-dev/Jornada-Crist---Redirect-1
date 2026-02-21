@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from 'react';
-import { motion } from 'motion/react';
-import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross, AlertCircle } from 'lucide-react';
 
 export default function App() {
   const targetUrl = 'https://jornadacrista-ultimachance.vercel.app/';
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     // 1. Back-Redirect Logic (Aggressive for Mobile)
@@ -72,6 +73,59 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-black font-sans text-white flex flex-col items-center overflow-x-hidden selection:bg-emerald-500/30">
+      {/* Fixed Back Button (All Devices) */}
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        onClick={() => setShowConfirm(true)}
+        className="fixed top-4 left-4 z-[100] bg-white/10 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-transform hover:bg-white/20"
+      >
+        ← Voltar
+      </motion.button>
+
+      {/* Confirmation Modal */}
+      <AnimatePresence>
+        {showConfirm && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowConfirm(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-sm bg-stone-900 border border-white/10 p-8 rounded-[2.5rem] shadow-2xl text-center"
+            >
+              <div className="bg-amber-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="w-8 h-8 text-amber-500" />
+              </div>
+              <h2 className="text-xl font-bold mb-4">Atenção!</h2>
+              <p className="text-stone-400 mb-8 leading-relaxed">
+                Deseja voltar e perder essa oferta exclusiva de <span className="text-emerald-500 font-bold">R$ 19,90</span>?
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  onClick={() => window.location.replace(targetUrl)}
+                  className="bg-stone-800 hover:bg-stone-700 text-stone-400 font-bold py-4 rounded-2xl transition-colors"
+                >
+                  Sim, sair
+                </button>
+                <button
+                  onClick={() => setShowConfirm(false)}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-900/20 transition-colors"
+                >
+                  Não, ficar
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* Background Image Overlay */}
       <div className="fixed inset-0 z-0 opacity-20">
         <img
