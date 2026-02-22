@@ -9,6 +9,7 @@ import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross, AlertCircle } from
 
 export default function App() {
   const targetUrl = 'https://jornadacrista-ultimachance.vercel.app/';
+  const checkoutUrl = 'https://pay.hotmart.com/B104571593W?off=5yvox3p4&checkoutMode=10';
   const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function App() {
   }, []);
 
   const handlePurchase = () => {
-    window.location.href = targetUrl;
+    window.location.href = checkoutUrl;
   };
 
   return (
@@ -78,7 +79,7 @@ export default function App() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         onClick={() => setShowConfirm(true)}
-        className="fixed top-4 left-4 z-[100] bg-white/10 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-transform hover:bg-white/20"
+        className="fixed top-6 left-6 z-[100] bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full text-lg font-black shadow-2xl flex items-center gap-3 active:scale-95 transition-all hover:bg-white/20 hover:scale-105"
       >
         ← Voltar
       </motion.button>
