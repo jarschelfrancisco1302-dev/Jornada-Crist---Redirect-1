@@ -180,6 +180,40 @@ export default function App() {
           </motion.p>
         </div>
 
+        {/* Pricing (Moved Up) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="text-center mb-10 w-full"
+        >
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <span className="h-[1px] w-6 bg-white/10" />
+            <p className="text-stone-500 line-through text-sm font-medium">De R$ 27,90</p>
+            <span className="h-[1px] w-6 bg-white/10" />
+          </div>
+          
+          <div className="relative inline-block">
+            <p className="text-7xl font-black tracking-tighter text-white">
+              R$ 19,90
+            </p>
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.15, 1],
+                rotate: [12, 15, 12]
+              }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+              className="absolute -top-5 -right-10 bg-emerald-500 text-black text-[10px] font-black px-3 py-1.5 rounded-lg"
+            >
+              OFERTA
+            </motion.div>
+          </div>
+          
+          <p className="mt-6 text-emerald-400 text-[11px] font-black tracking-[0.15em] uppercase bg-emerald-500/5 py-2 rounded-xl max-w-[240px] mx-auto">
+            Pagamento Único • Sem Mensalidades
+          </p>
+        </motion.div>
+
         {/* Feature Image Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -225,40 +259,6 @@ export default function App() {
               </motion.div>
             ))}
           </div>
-
-          {/* Pricing */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="text-center mb-10"
-          >
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="h-[1px] w-6 bg-white/10" />
-              <p className="text-stone-500 line-through text-sm font-medium">De R$ 27,90</p>
-              <span className="h-[1px] w-6 bg-white/10" />
-            </div>
-            
-            <div className="relative inline-block">
-              <p className="text-7xl font-black tracking-tighter text-white">
-                R$ 19,90
-              </p>
-              <motion.div 
-                animate={{ 
-                  scale: [1, 1.15, 1],
-                  rotate: [12, 15, 12]
-                }}
-                transition={{ repeat: Infinity, duration: 2.5 }}
-                className="absolute -top-5 -right-10 bg-emerald-500 text-black text-[10px] font-black px-3 py-1.5 rounded-lg"
-              >
-                OFERTA
-              </motion.div>
-            </div>
-            
-            <p className="mt-6 text-emerald-400 text-[11px] font-black tracking-[0.15em] uppercase bg-emerald-500/5 py-2 rounded-xl">
-              Pagamento Único • Sem Mensalidades
-            </p>
-          </motion.div>
 
           {/* CTA */}
           <motion.button
