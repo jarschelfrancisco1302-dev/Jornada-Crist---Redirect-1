@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross, AlertCircle } from 'lucide-react';
 
 export default function App() {
-  const targetUrl = 'https://pay.kirvano.com/6d9d1b17-339b-443b-a284-0e355c120ff5';
+  const targetUrl = 'https://jornadacrista-ultimachance.vercel.app/';
   const checkoutUrl = 'https://pay.kirvano.com/7be1003a-b6fe-429c-86e3-791e73137af4';
   const [showConfirm, setShowConfirm] = useState(false);
 
