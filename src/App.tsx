@@ -9,7 +9,7 @@ import { CheckCircle2, ShieldCheck, ArrowRight, Flame, Cross, AlertCircle } from
 
 export default function App() {
   const targetUrl = 'https://jornadacrista-ultimachance.vercel.app/';
-  const checkoutUrl = 'https://pay.kirvano.com/7be1003a-b6fe-429c-86e3-791e73137af4';
+  const checkoutUrl = 'https://pay.kiwify.com.br/Qy8CD3E';
   const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
