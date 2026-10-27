@@ -130,7 +130,7 @@ export default function App() {
       {/* Background Image Overlay */}
       <div className="fixed inset-0 z-0 opacity-30">
         <img
-          src="/src/assets/images/pope_background_spiritual_1793108628991.jpg"
+          src="/bg.jpg"
           alt="Vatican Background"
           className="w-full h-full object-cover scale-110 blur-[2px]"
         />
@@ -138,7 +138,7 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10 w-full max-w-md px-5 py-10 md:py-20 flex flex-col items-center">
+      <main className="relative z-10 w-full max-w-md px-5 pt-4 pb-10 md:pt-10 md:pb-20 flex flex-col items-center">
         
         {/* Top Icon */}
         <motion.div
@@ -232,7 +232,7 @@ export default function App() {
           className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden mb-10 border border-white/10 relative shadow-2xl shadow-amber-900/10"
         >
           <img
-            src="/src/assets/images/pope_francis_feature_1793108643063.jpg"
+            src="/pope.jpg"
             alt="Papa Francisco"
             className="w-full h-full object-cover"
           />
