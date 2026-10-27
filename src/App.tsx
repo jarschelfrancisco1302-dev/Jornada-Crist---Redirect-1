@@ -117,7 +117,7 @@ export default function App() {
                 </button>
                 <button
                   onClick={() => setShowConfirm(false)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-900/20 transition-colors"
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-amber-900/20 transition-colors"
                 >
                   Não, ficar
                 </button>
@@ -128,14 +128,13 @@ export default function App() {
       </AnimatePresence>
 
       {/* Background Image Overlay */}
-      <div className="fixed inset-0 z-0 opacity-20">
+      <div className="fixed inset-0 z-0 opacity-30">
         <img
-          src="https://picsum.photos/seed/faith/1920/1080?blur=10"
-          alt="Background"
-          className="w-full h-full object-cover scale-110"
-          referrerPolicy="no-referrer"
+          src="/src/assets/images/pope_background_spiritual_1793108628991.jpg"
+          alt="Vatican Background"
+          className="w-full h-full object-cover scale-110 blur-[2px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/95 to-black" />
       </div>
 
       {/* Main Content */}
@@ -147,7 +146,7 @@ export default function App() {
           animate={{ opacity: 1, scale: 1 }}
           className="mb-6 p-5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md"
         >
-          <Cross className="w-10 h-10 text-emerald-500" />
+          <Cross className="w-10 h-10 text-amber-500" />
         </motion.div>
 
         {/* Headline Section */}
@@ -155,7 +154,7 @@ export default function App() {
           <motion.span 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="inline-block px-5 py-1.5 bg-emerald-500/10 text-emerald-400 text-[11px] font-black uppercase tracking-[0.25em] rounded-full mb-6 border border-emerald-500/20"
+            className="inline-block px-5 py-1.5 bg-amber-500/10 text-amber-400 text-[11px] font-black uppercase tracking-[0.25em] rounded-full mb-6 border border-amber-500/20"
           >
             Atenção: Oferta Única
           </motion.span>
@@ -167,7 +166,7 @@ export default function App() {
             className="text-4xl md:text-5xl font-light tracking-tight leading-[1.1] mb-6"
           >
             Sua jornada <br />
-            <span className="font-serif italic text-emerald-500">não termina aqui.</span>
+            <span className="font-serif italic text-amber-500">não termina aqui.</span>
           </motion.h1>
           
           <motion.p 
@@ -203,15 +202,26 @@ export default function App() {
                 rotate: [12, 15, 12]
               }}
               transition={{ repeat: Infinity, duration: 2.5 }}
-              className="absolute -top-5 -right-10 bg-emerald-500 text-black text-[10px] font-black px-3 py-1.5 rounded-lg"
+              className="absolute -top-5 -right-10 bg-amber-500 text-black text-[10px] font-black px-3 py-1.5 rounded-lg shadow-lg shadow-amber-500/20"
             >
               OFERTA
             </motion.div>
           </div>
           
-          <p className="mt-6 text-emerald-400 text-[11px] font-black tracking-[0.15em] uppercase bg-emerald-500/5 py-2 rounded-xl max-w-[240px] mx-auto">
+          <p className="mt-6 text-amber-400 text-[11px] font-black tracking-[0.15em] uppercase bg-amber-500/5 py-2 rounded-xl max-w-[240px] mx-auto border border-amber-500/10">
             Pagamento Único • Sem Mensalidades
           </p>
+
+          {/* Quick Buy Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handlePurchase}
+            className="mt-8 w-full bg-amber-500 hover:bg-amber-600 text-black py-5 rounded-2xl font-black text-base shadow-xl shadow-amber-900/40 flex items-center justify-center gap-3 transition-all"
+          >
+            QUERO APROVEITAR AGORA
+            <ArrowRight className="w-5 h-5" />
+          </motion.button>
         </motion.div>
 
         {/* Feature Image Card */}
@@ -219,18 +229,17 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden mb-10 border border-white/10 relative shadow-2xl shadow-emerald-900/10"
+          className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden mb-10 border border-white/10 relative shadow-2xl shadow-amber-900/10"
         >
           <img
-            src="https://picsum.photos/seed/bible/800/600"
-            alt="Jornada Cristã"
-            className="w-full h-full object-cover grayscale brightness-75"
-            referrerPolicy="no-referrer"
+            src="/src/assets/images/pope_francis_feature_1793108643063.jpg"
+            alt="Papa Francisco"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
           <div className="absolute bottom-6 left-6 right-6">
-            <p className="text-[10px] font-black tracking-widest uppercase text-emerald-500 mb-1">Acesso Imediato</p>
-            <p className="text-xl font-serif italic text-white leading-tight">Tudo o que você precisa para uma rotina com Deus.</p>
+            <p className="text-[10px] font-black tracking-widest uppercase text-amber-500 mb-1">Acesso Imediato</p>
+            <p className="text-xl font-serif italic text-white leading-tight">Sua fé renovada com a benção da jornada.</p>
           </div>
         </motion.div>
 
@@ -252,8 +261,8 @@ export default function App() {
                 transition={{ delay: 0.4 + (i * 0.1) }}
                 className="flex items-center gap-4"
               >
-                <div className="bg-emerald-500/20 p-1 rounded-full">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                <div className="bg-amber-500/20 p-1 rounded-full">
+                  <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0" />
                 </div>
                 <span className="text-stone-200 text-sm font-semibold tracking-wide">{text}</span>
               </motion.div>
@@ -265,7 +274,7 @@ export default function App() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
             onClick={handlePurchase}
-            className="w-full bg-emerald-600 text-white font-black text-lg py-6 rounded-[2rem] shadow-2xl shadow-emerald-900/40 transition-all flex flex-col items-center justify-center gap-1 group"
+            className="w-full bg-amber-600 text-white font-black text-lg py-6 rounded-[2rem] shadow-2xl shadow-amber-900/40 transition-all flex flex-col items-center justify-center gap-1 group"
           >
             <span className="flex items-center gap-2">
               QUERO MEU ACESSO AGORA
@@ -277,7 +286,7 @@ export default function App() {
           {/* Guarantee */}
           <div className="mt-8 flex flex-col items-center gap-3">
             <div className="flex items-center gap-2 text-stone-500">
-              <ShieldCheck className="w-5 h-5 text-emerald-500/50" />
+              <ShieldCheck className="w-5 h-5 text-amber-500/50" />
               <p className="text-[10px] font-black tracking-[0.2em] uppercase">Garantia de 7 Dias</p>
             </div>
           </div>
